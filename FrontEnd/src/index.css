@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@media (min-width: 640px){
+    .NotFoundImg{
+        grid-area: 1/1/3/2;
+    } 
+}
