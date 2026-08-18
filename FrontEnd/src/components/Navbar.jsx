@@ -1,157 +1,90 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { FiMenu, FiArrowRight } from "react-icons/fi";
+import { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
-const Navbar = () => {
-  return (
-    <div className="bg-gray-50 sticky top-0 z-50">
-      <FlipNav />
-    </div>
-  );
-};
+const LINKS = [
+  { label: 'Home', href: '/' },
+  { label: 'Inventory', href: '/inventory' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
 
-const FlipNav = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <nav className="bg-black p-4 border-y border-gray-800 flex items-center md:justify-center gap-12 z-10">
-      <NavLeft setIsOpen={setIsOpen} />
-      <NavMenu isOpen={isOpen} />
-    </nav>
-  );
-};
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
 
-const Logo = () => {
-  // Temp logo from https://logoipsum.com/
-  return (
-    <svg
-      width="50"
-      height="39"
-      viewBox="0 0 50 39"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="fill-blue-600 lg:hidden"
-    >
-      <path
-        d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z"
-        stopColor="#000000"
-      ></path>
-      <path
-        d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z"
-        stopColor="#000000"
-      ></path>
-    </svg>
-  );
-};
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
 
-const NavLeft = ({ setIsOpen }) => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
+
   return (
-    <div className="flex w-full justify-evenly items-center gap-6">
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="block lg:hidden text-white text-2xl"
-        onClick={() => setIsOpen((pv) => !pv)}
+    <header className="sticky top-0 z-50 border-y border-white/15 bg-black">
+      <nav className="mx-auto flex max-w-6xl items-center justify-center px-7 py-6 sm:px-12 lg:px-20">
+        
+        {/* Desktop links */}
+        <ul className="hidden items-center justify-evenly w-full gap-8 md:flex">
+          {LINKS.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="group relative text-sm font-medium text-white/70 transition-colors duration-300 hover:text-white"
+              >
+                {link.label}
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* Hamburger */}
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="absolute right-7 flex h-10 w-10 items-center justify-center rounded-lg text-white transition-colors md:hidden sm:right-12 lg:right-20"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+        >
+          {open ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
+      </nav>
+
+      {/* Mobile menu */}
+      <div
+        className={`overflow-hidden border-t border-white/10 bg-black transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
+          open
+            ? 'max-h-96 opacity-100'
+            : 'max-h-0 border-transparent opacity-0'
+        }`}
       >
-        <FiMenu />
-      </motion.button>
-        <Logo />
-      <NavLink text="Home" />
-      <NavLink text="Inventory" />
-      <NavLink text="About" />
-      <NavLink text="Contact" />
-    </div>
+        <ul className="flex flex-col gap-1 px-7 pb-4">
+          {LINKS.map((link, i) => (
+            <li
+              key={link.href}
+              style={{
+                transitionDelay: open ? `${i * 60 + 100}ms` : '0ms',
+              }}
+              className={`transform transition-all duration-500 ${
+                open
+                  ? 'translate-x-0 opacity-100'
+                  : '-translate-x-4 opacity-0'
+              }`}
+            >
+              <a
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="block rounded-lg px-4 py-3 text-base font-medium text-white"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </header>
   );
-};
-
-const NavLink = ({ text }) => {
-  return (
-    <a
-      href="#"
-      rel="nofollow"
-      className="hidden lg:block h-7.5 overflow-hidden font-medium"
-    >
-      <motion.div whileHover={{ y: -30 }}>
-        <span className="flex items-center h-7.5 text-white">{text}</span>
-        <span className="flex items-center h-7.5 text-mist-500">
-          {text}
-        </span>
-      </motion.div>
-    </a>
-  );
-};
-
-const NavMenu = ({ isOpen }) => {
-  return (
-    <motion.div
-      variants={menuVariants}
-      initial="closed"
-      animate={isOpen ? "open" : "closed"}
-      className="absolute p-4 bg-white shadow-lg left-0 right-0 top-full origin-top flex flex-col gap-4"
-    >
-      <MenuLink text="Home" />
-      <MenuLink text="Inventory" />
-      <MenuLink text="About" />
-      <MenuLink text="Contact" />
-    </motion.div>
-  );
-};
-
-const MenuLink = ({ text }) => {
-  return (
-    <motion.a
-      variants={menuLinkVariants}
-      rel="nofollow"
-      href="#"
-      className="h-7.5 overflow-hidden font-medium text-lg flex items-start gap-2"
-    >
-      <motion.span variants={menuLinkArrowVariants}>
-        <FiArrowRight className="h-7.5 text-gray-950" />
-      </motion.span>
-      <motion.div whileHover={{ y: -30 }}>
-        <span className="flex items-center h-7.5 text-black">{text}</span>
-        <span className="flex items-center h-7.5 text-indigo-600">
-          {text}
-        </span>
-      </motion.div>
-    </motion.a>
-  );
-};
-
-export default Navbar;
-
-const menuVariants = {
-  open: {
-    scaleY: 1,
-    transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.1,
-    },
-  },
-  closed: {
-    scaleY: 0,
-    transition: {
-      when: "afterChildren",
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const menuLinkVariants = {
-  open: {
-    y: 0,
-    opacity: 1,
-  },
-  closed: {
-    y: -10,
-    opacity: 0,
-  },
-};
-
-const menuLinkArrowVariants = {
-  open: {
-    x: 0,
-  },
-  closed: {
-    x: -4,
-  },
-};
+}
