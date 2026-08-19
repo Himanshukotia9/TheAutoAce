@@ -47,7 +47,7 @@ export default function StoryBanner() {
               momentum.
             </p>
             <div className="mt-2 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 sm:flex sm:flex-wrap sm:gap-6">
-              <Button href="/about" name="Read the story"/>
+              <Button href="/about" name="Read the story" style="px-7 py-3.5"/>
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ export default function CarsForSale() {
               each hand-selected and ready for its next chapter. Find the one
               that moves you.
             </p>
-            <Button href="/inventory" name="Inventory"/>
+            <Button href="/inventory" name="Inventory" style="px-7 py-3.5"/>
           </div>
 
           {/* Image side */}

@@ -1,55 +1,58 @@
 import { useState } from "react";
 import { ChevronRight, ChevronDown, SlidersHorizontal, RotateCcw, } from "lucide-react";
 import { CARS, MAKES, SORT_OPTIONS, formatPrice, formatMileage, } from "../../public/data.jsx";
+import Button from "../components/Button.jsx";
 
 function CarCard({ car }) {
   return (
-    <article className="group overflow-hidden rounded-xl border border-white/10 bg-white/3 transition-all duration-300 hover:border-amber-500/40 hover:bg-white/5">
-      <div className="relative aspect-16/10 overflow-hidden">
+    <article className="group overflow-hidden rounded-xl bg-white/3 transition-all duration-300 hover:bg-white/5">
+      <div className="relative overflow-hidden">
         <img
           src={car.image}
           alt={`${car.year} ${car.make} ${car.model}`}
-          loading="lazy"
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
 
         <div className="absolute inset-0 bg-linear-to-t from-ink-950/80 via-transparent to-transparent" />
 
         {car.featured && (
-          <span className="absolute left-3 top-3 rounded-full bg-amber-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-ink-950">
+          <span className="absolute left-3 top-3 rounded-full bg-white/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-ink-950">
             Featured
           </span>
         )}
 
-        <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between">
-          <div>
-            <p className="text-[11px] uppercase tracking-wider text-white/60">
+        {!car.available && (
+          <span className="absolute left-3 top-3 rounded-full text-white bg-red-700 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-ink-950">
+            Sold
+          </span>
+        )}
+      </div>
+      
+
+      <div className="p-5">
+          <div className=" flex flex-col items-center justify-center">
+            <p className="text-sm uppercase tracking-wider text-white">
               {car.make}
             </p>
             <h3 className="font-display text-xl text-white">{car.model}</h3>
           </div>
+        
+        <div className="grid grid-cols-2 gap-3 border-t border-white/10 pt-4 mt-5 text-sm">
+            <div>
+            <p className="text-[10px] uppercase tracking-wider text-white/40">
+              Year
+            </p>
+            <p className="font-medium text-white/80">
+              {car.year}
+            </p>
+          </div>
 
-          <span className="text-xs text-white/50">{car.year}</span>
-        </div>
-      </div>
-
-      <div className="p-5">
-        <div className="grid grid-cols-2 gap-3 text-sm">
           <div>
             <p className="text-[10px] uppercase tracking-wider text-white/40">
               Mileage
             </p>
             <p className="font-medium text-white/80">
               {formatMileage(car.mileage)} mi
-            </p>
-          </div>
-
-          <div>
-            <p className="text-[10px] uppercase tracking-wider text-white/40">
-              Power
-            </p>
-            <p className="font-medium text-white/80">
-              {car.horsepower} hp
             </p>
           </div>
 
@@ -71,11 +74,9 @@ function CarCard({ car }) {
         </div>
 
         <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
-          <span className="font-display text-2xl text-amber-400">
-            {formatPrice(car.price)}
-          </span>
+          <Button href="tel:+918284959177" name="Call For Price" style="px-5 py-2"/>
 
-          <button className="group/btn flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-white/60 transition-colors hover:text-amber-400">
+          <button className="group/btn flex items-center gap-1.5 text-sm font-medium uppercase tracking-wider text-white/60 transition-colors hover:text-white">
             Details
             <ChevronRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
           </button>
@@ -97,12 +98,6 @@ export default function Inventory() {
 
   const sorted = [...filtered].sort((a, b) => {
     switch (sort) {
-      case "price-asc":
-        return a.price - b.price;
-
-      case "price-desc":
-        return b.price - a.price;
-
       case "year-desc":
         return b.year - a.year;
 
@@ -137,31 +132,18 @@ export default function Inventory() {
   return (
     <section
       id="inventory"
-      className="border-t border-white/5 bg-ink-950 px-7 py-20 sm:px-12 lg:px-20"
+      className="border-t border-white/5 bg-ink-950 px-7 py-5 sm:py-10 lg:py-20 sm:px-12 lg:px-22"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto">
         {/* Heading */}
-        <div className="mb-10 flex flex-col gap-4">
-          <span className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-amber-400 animate-fade-up">
-            <span className="h-px w-10 bg-amber-500" />
-            The Collection
-          </span>
+        <div className="mb-10 flex flex-col items-center justify-center gap-4">
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <h2
-              className="font-display text-4xl text-white sm:text-5xl animate-fade-up"
-              style={{ animationDelay: "0.1s" }}
+              className="font-display text-4xl text-white sm:text-5xl"
             >
-              Cars for Sale
+              INVENTORY
             </h2>
-
-            <p
-              className="max-w-sm text-sm text-white/50 animate-fade-up"
-              style={{ animationDelay: "0.15s" }}
-            >
-              {sorted.length} vehicle
-              {sorted.length !== 1 ? "s" : ""} available
-            </p>
           </div>
         </div>
 
@@ -209,8 +191,8 @@ export default function Inventory() {
                       }}
                       className={`flex w-full items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-white/10 ${
                         make === m
-                          ? "text-amber-400"
-                          : "text-white/70"
+                          ? "text-white"
+                          : "text-white/60"
                       }`}
                     >
                       {m}
@@ -264,8 +246,8 @@ export default function Inventory() {
                       }}
                       className={`flex w-full items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-white/10 ${
                         sort === opt.value
-                          ? "text-amber-400"
-                          : "text-white/70"
+                          ? "text-white"
+                          : "text-white/60"
                       }`}
                     >
                       {opt.label}
@@ -284,12 +266,19 @@ export default function Inventory() {
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-white/15 px-5 py-2.5 text-sm font-medium text-white/80 transition-all duration-300 hover:border-amber-500 hover:bg-amber-500 hover:text-ink-950"
+              className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-white/15 px-5 py-2.5 text-sm font-medium text-white transition-all duration-300  hover:bg-white hover:text-black"
             >
               <RotateCcw className="h-4 w-4 transition-transform duration-300 group-hover:-rotate-180" />
               Clear Filters
             </button>
           )}
+        </div>
+
+        <div className="mb-10 flex items-center justify-between">
+            <p className="max-w-sm text-sm text-white/50 animate-fade-up">
+              {sorted.length} vehicle
+              {sorted.length !== 1 ? "s" : ""} available
+            </p>
         </div>
 
         {/* Car Grid */}

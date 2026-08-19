@@ -10,8 +10,9 @@ export const CARS = [
     fuel: "Hybrid",
     horsepower: 670,
     image:
-      "https://images.pexels.com/photos/38570/lamborghini-car-speed-prestige-38570.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://res.cloudinary.com/ftyrh7im/image/upload/v1787152556/E36_325TDS_GOLDEN-26.jpg",
     featured: true,
+    available: true,
   },
   {
     id: "aurora-s",
@@ -25,6 +26,7 @@ export const CARS = [
     horsepower: 520,
     image:
       "https://images.pexels.com/photos/35082884/pexels-photo-35082884.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
   {
     id: "ferrari-spider",
@@ -38,6 +40,7 @@ export const CARS = [
     horsepower: 661,
     image:
       "https://images.pexels.com/photos/18479749/pexels-photo-18479749.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
   {
     id: "ferrari-roma",
@@ -51,6 +54,7 @@ export const CARS = [
     horsepower: 612,
     image:
       "https://images.pexels.com/photos/38136077/pexels-photo-38136077.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
   {
     id: "bmw-m",
@@ -63,7 +67,8 @@ export const CARS = [
     fuel: "Petrol",
     horsepower: 503,
     image:
-      "https://images.pexels.com/photos/19076555/pexels-photo-19076555.jpeg?auto=compress&cs=tinysrgb&w=900",
+      'https://res.cloudinary.com/ftyrh7im/image/upload/v1787151874/E36_325TDS_GOLDEN-22.jpg',
+    available: false,
   },
   {
     id: "bmw-convertible",
@@ -77,6 +82,7 @@ export const CARS = [
     horsepower: 617,
     image:
       "https://images.pexels.com/photos/16188347/pexels-photo-16188347.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
   {
     id: "porsche-911",
@@ -90,6 +96,7 @@ export const CARS = [
     horsepower: 379,
     image:
       "https://images.pexels.com/photos/17017141/pexels-photo-17017141.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
   {
     id: "porsche-cabriolet",
@@ -103,6 +110,7 @@ export const CARS = [
     horsepower: 379,
     image:
       "https://images.pexels.com/photos/38404151/pexels-photo-38404151.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
   {
     id: "mercedes-amg",
@@ -116,6 +124,7 @@ export const CARS = [
     horsepower: 577,
     image:
       "https://images.pexels.com/photos/19240614/pexels-photo-19240614.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
   {
     id: "mercedes-coupe",
@@ -129,6 +138,7 @@ export const CARS = [
     horsepower: 429,
     image:
       "https://images.pexels.com/photos/20695256/pexels-photo-20695256.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
   {
     id: "aston-vantage",
@@ -142,6 +152,7 @@ export const CARS = [
     horsepower: 503,
     image:
       "https://images.pexels.com/photos/439405/pexels-photo-439405.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
   {
     id: "aston-db12",
@@ -155,6 +166,7 @@ export const CARS = [
     horsepower: 671,
     image:
       "https://images.pexels.com/photos/4274785/pexels-photo-4274785.jpeg?auto=compress&cs=tinysrgb&w=900",
+    available: true,
   },
 ];
 
@@ -169,20 +181,12 @@ export const SORT_OPTIONS = [
     label: "Featured",
   },
   {
-    value: "price-asc",
-    label: "Price: Low to High",
-  },
-  {
-    value: "price-desc",
-    label: "Price: High to Low",
-  },
-  {
     value: "year-desc",
-    label: "Newest first",
+    label: "Newest to Oldest",
   },
   {
     value: "year-asc",
-    label: "Oldest first",
+    label: "Oldest to Newest",
   },
   {
     value: "mileage-asc",

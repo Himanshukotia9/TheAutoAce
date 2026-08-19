@@ -48,7 +48,7 @@ export default function Footer() {
           <div className="flex flex-col items-start sm:items-end">
             <div className="flex text-white/70 items-center gap-2.5">
               <a className="flex title-font font-medium items-center text-gray-900 md:mb-0">
-                <img className="w-28 h-16" src="/Logo.png" alt="Logo" />
+                <img className="w-28 h-16 md:w-34 md:h-18" src="/Logo.png" alt="Logo" />
               </a>
             </div>
             <a
